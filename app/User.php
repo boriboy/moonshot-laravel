@@ -9,6 +9,10 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    /** constants section */
+    const USER_TYPE_USER = 'user';
+    const USER_TYPE_AGENT = 'agent';
+
     const ROLE_USER = 'user';
     const ROLE_REP = 'rep';
     const ROLE_ADMIN = 'admin';

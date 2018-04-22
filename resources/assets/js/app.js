@@ -16,7 +16,11 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('modal', require('./components/modal.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        showModal: false
+    }
 });

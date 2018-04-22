@@ -1,95 +1,227 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card card-default">
+                    <div class="card-header">Login/Register</div>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+                    <div class="card-body">
+                        {{-- Login --}}
+                        <button id="show-modal" @click="showModal = 'login'">Login</button>
+                        <!-- use the modal component, pass in the prop -->
+                        <modal v-if="showModal == 'login'" @close="showModal = false">
+                            {{-- customized content--}}
+                            <h3 slot="header">Login</h3>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+                            <div slot="body">
+                                <form method="POST" action="{{ route('login') }}">
+                                    @csrf
 
-            .full-height {
-                height: 100vh;
-            }
+                                    <div class="form-group row">
+                                        <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+                                        <div class="col-md-6">
+                                            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
 
-            .position-ref {
-                position: relative;
-            }
+                                            @if ($errors->has('email'))
+                                                <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                            @endif
+                                        </div>
+                                    </div>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+                                    <div class="form-group row">
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
-            .content {
-                text-align: center;
-            }
+                                        <div class="col-md-6">
+                                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
-            .title {
-                font-size: 84px;
-            }
+                                            @if ($errors->has('password'))
+                                                <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                            @endif
+                                        </div>
+                                    </div>
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-8 offset-md-4">
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Login') }}
+                                            </button>
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </modal>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+                        {{-- Register as User --}}
+                        <button id="show-modal" @click="showModal = 'user-register'">Register as User</button>
+                        <!-- use the modal component, pass in the prop -->
+                        <modal v-if="showModal == 'user-register'" @close="showModal = false">
+                            {{-- customized content--}}
+                            <h3 slot="header">Register as User</h3>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                            <div slot="body">
+                                <form method="POST" action="{{ route('register') }}">
+                                    @csrf
+
+                                    <div class="form-group row">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+
+                                            @if ($errors->has('name'))
+                                                <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+
+                                            @if ($errors->has('email'))
+                                                <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+
+                                            @if ($errors->has('password'))
+                                                <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-6 offset-md-4">
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Register') }}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="_type" value="user"/>
+                                </form>
+                            </div>
+
+                        </modal>
+
+                        {{-- Register as Agent--}}
+                        <button id="show-modal" @click="showModal = 'agent-register'">Register as Agent</button>
+                        <!-- use the modal component, pass in the prop -->
+                        <modal v-if="showModal == 'agent-register'" @close="showModal = false">
+                            {{-- customized content--}}
+                            <h3 slot="header">Register as Agent</h3>
+
+                            <div slot="body">
+                                <form method="POST" action="{{ route('register') }}">
+                                    @csrf
+
+                                    <div class="form-group row">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+
+                                            @if ($errors->has('name'))
+                                                <span class="invalid-feedback">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+
+                                            @if ($errors->has('email'))
+                                                <span class="invalid-feedback">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+
+                                            @if ($errors->has('password'))
+                                                <span class="invalid-feedback">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-6 offset-md-4">
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Register') }}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="_type" value="agent"/>
+                                </form>
+                            </div>
+
+                        </modal>
+                    </div>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+    {{--<div class="">--}}
+        {{--<div class="m-b-md">--}}
+            {{--Register--}}
+        {{--</div>--}}
+
+        {{--<div class="links">--}}
+            {{--<a href="/register/user">As user</a>--}}
+            {{--<a href="/register/agent">As Agent</a>--}}
+        {{--</div>--}}
+        {{--<example-component></example-component>--}}
+
+@endsection
