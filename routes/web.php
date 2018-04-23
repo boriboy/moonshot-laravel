@@ -21,5 +21,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('user')->name('user.')->group(function() {
     Route::post('profile', 'UserController@update')->name('profile');
+    Route::post('balance', 'UserController@balance')->name('balance');
 });
 

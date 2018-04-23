@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\AccountMovement;
+use App\Observers\AccountMovementObserver;
 use App\Observers\UserObserver;
 use App\User;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
 
         // register model observers
         User::observe(UserObserver::class);
+        AccountMovement::observe(AccountMovementObserver::class);
     }
 
     /**

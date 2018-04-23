@@ -19,6 +19,12 @@ class User extends Authenticatable
     const ROLE_ADMIN = 'admin';
 
     /**
+     * Eager load relationships
+     * @var array
+     */
+    protected $with = ['balance'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -45,6 +51,14 @@ class User extends Authenticatable
         $this->login_at = Carbon::now();
 
         return $this->save();
+    }
+
+    /**
+     * Returns user type (user/agent)
+     * @return string
+     */
+    public function type() {
+        return $this->role === self::ROLE_USER ? self::TYPE_USER : self::TYPE_AGENT;
     }
 
     // ----- [static] ----- //

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Hello {{ $user->name }}</div>
+                <div class="card-header">Hello {{ $user->type() }} {{ $user->name }}</div>
 
                 <div class="card-body">
                     @if ($user->role === \App\User::ROLE_ADMIN)
@@ -58,8 +58,42 @@
                             </form>
 
                             <h2>
-
+                                Finance
                             </h2>
+
+                            <form method="POST" action="{{ route('user.balance') }}">
+                                @csrf
+
+                                <div class="form-group row">
+                                    <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="amount" type="number" class="form-control{{ $errors->has('amount') ? ' is-invalid' : '' }}" name="amount" value="{{ $user->balance->balance }}" autofocus>
+
+                                        @if ($errors->has('amount'))
+                                            <span class="invalid-feedback">
+                                                <strong>{{ $errors->get('amount') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-3 offset-md-4">
+                                        <button type="submit" class="btn btn-primary" name="deposit" value="true">
+                                            {{ __('Deposit') }}
+                                        </button>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <button type="submit" class="btn btn-primary" name="withdraw" value="true">
+                                            {{ __('Withdraw') }}
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </form>
+
                         </div>
                     @endif
 

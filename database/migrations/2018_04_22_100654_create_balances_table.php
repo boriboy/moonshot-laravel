@@ -17,7 +17,7 @@ class CreateBalancesTable extends Migration
             $table->increments('id');
 
             // user ref (column & foreign key)
-            $table->integer('user_id')->unsigned()->index();
+            $table->integer('user_id')->unsigned()->index()->unique();
             $table->foreign('user_id')->references('id')->on('users');
 
             // balance
