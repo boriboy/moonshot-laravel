@@ -16,6 +16,7 @@ class Balance extends Model
     ];
 
     public function initiateOperation(User $user, $amount, string $type) {
+        // todo: should be a db transaction to allow multiple actions simultaneously
         // validate deposit/withdraw
         if (!in_array($type, [AccountMovement::TYPE_WITHDRAW, AccountMovement::TYPE_DEPOSIT])) {
             throw new \Exception('invalid account movement type: ' . $type);
