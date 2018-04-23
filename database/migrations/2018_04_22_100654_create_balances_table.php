@@ -21,7 +21,7 @@ class CreateBalancesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
 
             // balance
-            $table->integer('balance')->unsigned();
+            $table->float('balance')->unsigned();
 
             $table->timestamps();
         });
