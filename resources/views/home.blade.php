@@ -68,7 +68,7 @@
                                     <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="amount" type="number" class="form-control{{ $errors->has('amount') ? ' is-invalid' : '' }}" name="amount" value="{{ $user->balance->balance }}" autofocus>
+                                        <input id="amount" type="number" class="form-control{{ $errors->has('amount') ? ' is-invalid' : '' }}" step="0.01" name="amount" value="{{ $user->balance->balance }}" autofocus>
 
                                         @if ($errors->has('amount'))
                                             <span class="invalid-feedback">
