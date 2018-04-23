@@ -59,4 +59,22 @@ class User extends Authenticatable
     public static function resolveDefaultRoleForType($type = false) {
         return $type === self::TYPE_AGENT ? self::ROLE_REP : self::ROLE_USER;
     }
+
+    // ----- [relationships] ----- //
+
+    /**
+     * User has one balance
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function balance() {
+        return $this->hasOne(Balance::class);
+    }
+
+    /**
+     * Movements in user's account
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function accountMovements() {
+        return $this->hasMany(AccountMovement::class);
+    }
 }
