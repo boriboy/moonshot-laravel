@@ -36015,7 +36015,7 @@ window.Vue = __webpack_require__(37);
 
 Vue.component('example-component', __webpack_require__(40));
 Vue.component('modal', __webpack_require__(43));
-Vue.component('table-draggable', __webpack_require__(46));
+Vue.component('hierarchy-draggable', __webpack_require__(46));
 
 var app = new Vue({
   el: '#app',
@@ -47594,16 +47594,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -47612,11 +47602,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         draggable: __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a
     },
 
-    props: ['users'],
+    props: ['hierarchy'],
     //
     data: function data() {
+        console.log(this.hierarchy);
         return {
-            usersNew: this.users,
+            hierarchyNew: this.hierarchy,
             csrf: document.head.querySelector('meta[name="csrf-token"]').content
         };
     },
@@ -47624,20 +47615,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         update: function update() {
-            this.usersNew.map(function (user, index) {
-                user.order = index + 1;
-            });
-
-            axios.put('/admin/users/updateAll', {
-                users: this.usersNew
-            }).then(function (response) {
-                // success message
+            this.hierarchyNew.map(function (unit, index) {
+                console.log(unit, index);
             });
         }
     },
 
     mounted: function mounted() {
-        console.log('Component mounted.');
+        console.log('Component hierarchy mounted.');
     }
 });
 
@@ -49613,59 +49598,33 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "table",
-    { staticClass: "table table-striped table-bordered" },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "draggable",
-        {
-          attrs: {
-            list: _vm.usersNew,
-            options: { animation: 200, handle: ".my-handle" },
-            element: "tbody"
-          },
-          on: { change: _vm.update }
-        },
-        _vm._l(_vm.usersNew, function(user, index) {
-          return _c("tr", { staticClass: "my-handle" }, [
-            _c("td", [_vm._v(_vm._s(user.id))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(user.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(user.email))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(user.login_at))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(user.balance.balance))])
-          ])
-        })
+    "draggable",
+    {
+      staticClass: "list-group",
+      attrs: {
+        list: _vm.hierarchyNew,
+        options: { animation: 200, handle: ".my-handle" },
+        element: "ul"
+      },
+      on: { change: _vm.update }
+    },
+    _vm._l(_vm.hierarchyNew, function(unit, index) {
+      return _c(
+        "div",
+        { staticClass: "my-handle" },
+        [
+          _c("li", { staticClass: "list-group-item" }, [
+            _vm._v(_vm._s(unit.user.name))
+          ]),
+          _vm._v(" "),
+          _c("hierarchy-draggable", { attrs: { hierarchy: unit.children } })
+        ],
+        1
       )
-    ],
-    1
+    })
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Email")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Last Login")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Balance")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

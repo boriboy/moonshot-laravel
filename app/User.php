@@ -91,4 +91,13 @@ class User extends Authenticatable
     public function accountMovements() {
         return $this->hasMany(AccountMovement::class);
     }
+
+    /**
+     * Hierarchy unit of user
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function hierarchyUnit() {
+        return $this->hasOne(Hierarchy::class);
+    }
+
 }

@@ -20,7 +20,7 @@
                             <h3 slot="header">Assignment Hierarchy</h3>
 
                             <div slot="body">
-                                <table-draggable :users="{{ \App\User::where('role', 'user')->get()->values() }}"></table-draggable>
+                                <hierarchy-draggable :hierarchy="{{ $user->hierarchyUnit->tree()->values() }}"></hierarchy-draggable>
                             </div>
 
                         </modal>

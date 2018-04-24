@@ -17,7 +17,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('modal', require('./components/modal.vue'));
-Vue.component('table-draggable', require('./components/draggable.vue'));
+Vue.component('hierarchy-draggable', require('./components/draggable.vue'));
 
 const app = new Vue({
     el: '#app',

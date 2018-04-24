@@ -1,27 +1,17 @@
 <template>
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Last Login</th>
-            <th>Balance</th>
-        </tr>
-        </thead>
 
-        <draggable :list="usersNew" :options="{animation:200, handle:'.my-handle'}" :element="'tbody'" @change="update">
-            <tr v-for="(user, index) in usersNew" class="my-handle">
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.login_at}}</td>
-                <td>{{ user.balance.balance}}</td>
-            </tr>
+    <draggable :list="hierarchyNew" :options="{animation:200, handle:'.my-handle'}" :element="'ul'" @change="update" class="list-group">
+        <div v-for="(unit, index) in hierarchyNew" class="my-handle">
+            <li class="list-group-item">{{unit.user.name}}</li>
+            <hierarchy-draggable :hierarchy="unit.children"></hierarchy-draggable>
+        </div>
 
-        </draggable>
+        <!--<tr v-for="(depth, index) in hierarchyNew" class="my-handle">-->
+            <!--<td v-for="">{{ depth}</td>-->
+        <!--</tr>-->
 
-    </table>
+    </draggable>
+
 </template>
 
 <script type="text/babel">
@@ -32,31 +22,26 @@
             draggable
         },
 
-        props: ['users'],
+        props: ['hierarchy'],
 //
         data() {
+            console.log(this.hierarchy);
             return {
-                usersNew: this.users,
+                hierarchyNew: this.hierarchy,
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content
             }
         },
 
         methods: {
             update() {
-                this.usersNew.map((user, index) => {
-                    user.order = index + 1;
-                })
-
-                axios.put('/admin/users/updateAll', {
-                    users: this.usersNew
-                }).then((response) => {
-                    // success message
+                this.hierarchyNew.map((unit, index) => {
+                    console.log(unit, index)
                 })
             }
         },
 
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component hierarchy mounted.')
         }
     }
 </script>
