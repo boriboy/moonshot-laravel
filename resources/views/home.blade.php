@@ -12,6 +12,19 @@
                         {{-- role admin--}}
                     @elseif ($user->role === \App\User::ROLE_REP)
                         {{-- role representative --}}
+                        {{-- Register as User --}}
+                        <button id="show-modal" @click="showModal = 'assignment-hierarchy'">Assignment Hierarchy</button>
+                        <!-- use the modal component, pass in the prop -->
+                        <modal v-if="showModal == 'assignment-hierarchy'" @close="showModal = false">
+                        {{-- customized content--}}
+                            <h3 slot="header">Assignment Hierarchy</h3>
+
+                            <div slot="body">
+                                <table-draggable :users="{{ \App\User::where('role', 'user')->get()->values() }}"></table-draggable>
+                            </div>
+
+                        </modal>
+
                     @else
                     {{-- role user --}}
                         {{-- private info section --}}
@@ -102,6 +115,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
+
                 </div>
             </div>
         </div>
